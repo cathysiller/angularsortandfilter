@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+
+  <head>
+
+      <meta charset="UTF-8">
+      <title>Angular Search Function</title>
+
+      <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootswatch/3.2.0/sandstone/bootstrap.min.css">
+      <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+
+      <style>
+
+          body { 
+            padding-top:50px; 
+            text-align: center;
+          }
+
+          h1 { 
+            color: #77bb13; 
+            padding:50px 
+          }
+
+      </style>
+
+
+      <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js"></script>
+
+      <script src="angular-route.min.js"></script>
+
+      <script src="script.js"></script>
+
+      <script src="app.js"></script>
+
+  </head>
+
+  <body>
+
+    <div class="view-container">
+      <div ng-view class="view-frame"></div>
+    </div>
+
+    <div class="container" ng-app="sortApp" ng-controller="mainController">
+    
+     <h1>Angular Search Function</h1>
+
+      <form>
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-addon"><i class="fa fa-search"></i></div>
+            <input type="text" class="form-control" placeholder="search yo site" ng-model="searchSites">
+          </div>      
+        </div>
+      </form>
+
+      <table class="table table-bordered table-striped">
+
+        <div ng-view></div>
+        
+        <thead>
+          <tr>
+            <td>
+              <a href="#" ng-click="sortType = 'client'; sortReverse = !sortReverse">
+                Client
+                <span ng-show="sortType == 'client' && !sortReverse" class="fa fa-caret-down"></span>
+                <span ng-show="sortType == 'client' && sortReverse" class="fa fa-caret-up"></span>
+              </a>
+            </td>
+            <td>
+              <a href="#" ng-click="sortType = 'site'; sortReverse = !sortReverse">
+                Site
+                <span ng-show="sortType == 'site' && !sortReverse" class="fa fa-caret-down"></span>
+                <span ng-show="sortType == 'site' && sortReverse" class="fa fa-caret-up"></span>
+              </a>
+            </td>
+          </tr>
+        </thead>
+        
+        <tbody>
+          <tr ng-repeat="sites in site | orderBy:sortType:sortReverse | filter:searchSites">
+            <td>
+          {{ sites.client }}
+            </td>
+            <td>
+              <a href="">{{ sites.site }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
